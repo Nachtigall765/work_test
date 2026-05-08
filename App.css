@@ -1,0 +1,376 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: #222;
+  background: #eef8e7;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* タイトル */
+.phoneFrame h1 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 42px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.introText {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0 0 34px;
+}
+
+/* 基本情報・質問の白いエリア */
+.profileBox,
+.questionBox,
+.resultBox {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.78);
+  border: 2px solid rgba(60, 60, 60, 0.22);
+  border-radius: 26px;
+  padding: 34px;
+  margin-top: 28px;
+}
+
+/* 基本情報入力 */
+.profileBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.profileBox label {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.profileBox input {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  font-size: 20px;
+  border: 3px solid #222;
+  background: #fff;
+}
+
+/* 質問画面 */
+.questionHeader {
+  width: 100%;
+  padding: 16px;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+
+.questionBox p {
+  margin: 0 0 24px;
+  font-size: 20px;
+  line-height: 1.7;
+  font-weight: 700;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  font-size: 20px;
+  line-height: 1.5;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.optionLabel:hover {
+  border-color: #6fcf97;
+  background: #f4fff7;
+}
+
+.optionLabel input {
+  width: 24px;
+  height: 24px;
+  accent-color: #66cdaa;
+}
+
+/* ボタン */
+.buttonArea {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.buttonArea.single {
+  justify-content: center;
+}
+
+button {
+  min-width: 160px;
+  padding: 12px 34px;
+  border: none;
+  border-radius: 10px;
+  background: #f5b800;
+  color: #111;
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #c28e00;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.diagnosisButton {
+  background: #28aee4;
+  box-shadow: 0 5px 0 #1680aa;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  margin-top: 36px;
+}
+
+/* 結果画面 */
+.resultFrame {
+  max-width: 920px;
+}
+
+.resultBox h1 {
+  font-size: 42px;
+}
+
+.resultContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.chartTitle{
+  font-size: 28px;
+  font-weight: bold;
+  color: #d36c8c;
+  margin-bottom: 16px;
+}
+.chartBox {
+  flex: 1;
+  min-width: 420px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.chartBox canvas{
+  width: 100% !important;
+  height: 460px !important;
+}
+
+.resultTextBox {
+  width: 100%;
+  max-width: 560px;
+  min-width: 320px;
+  text-align: center;
+  margin-top: 20px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 18px;
+  font-size: 20px;
+  line-height: 1.8;
+  flex: 1;
+}
+
+.resultTextBox p {
+  margin: 14px 0 4px;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.resultTextBox strong,
+.resultTextBox span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.resultButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.resultButtons button {
+  min-width: 150px;
+  font-size: 20px;
+}
+
+/* PCで横に広くなりすぎない */
+@media (min-width: 1000px) {
+  
+
+  .resultFrame {
+    max-width: 960px;
+  }
+}
+
+/* スマホ表示 */
+@media (max-width: 600px) {
+  .app {
+    padding: 16px;
+    align-items: flex-start;
+  }
+
+  .phoneFrame h1 {
+    font-size: 30px;
+  }
+
+  .introText {
+    font-size: 15px;
+  }
+
+  .profileBox,
+  .questionBox,
+  .resultBox {
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  .profileBox {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .profileBox label {
+    font-size: 20px;
+  }
+
+  .profileBox input {
+    font-size: 18px;
+  }
+
+  .questionHeader {
+    font-size: 28px;
+  }
+
+  .questionBox p {
+    font-size: 17px;
+  }
+
+  .optionLabel {
+    font-size: 17px;
+    padding: 16px 14px;
+  }
+
+  .buttonArea,
+  .navButtons {
+    gap: 14px;
+  }
+
+  button {
+    min-width: 0;
+    flex: 1;
+    font-size: 20px;
+    padding: 11px 18px;
+  }
+
+  .resultContent {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chartBox {
+    max-width: 100%;
+    min-width: 100%;
+  }
+
+  .chartBox{
+    height: 360px !important;
+  }
+
+  .resultTextBox {
+    font-size: 16px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .resultTextBox p {
+    font-size: 20px;
+  }
+
+  .resultButtons {
+    flex-direction: column;
+  }
+
+  .resultButtons button {
+    width: 100%;
+  }
+}
+
+/* 印刷時 */
+@media print {
+  body {
+    background: white;
+  }
+
+  .app {
+    padding: 0;
+    display: block;
+  }
+
+  .resultFrame {
+    max-width: none;
+    box-shadow: none;
+    border-radius: 0;
+    background: white;
+  }
+
+  .buttonArea,
+  .navButtons,
+  .resultButtons {
+    display: none;
+  }
+
+  .resultBox {
+    background: white;
+    border: none;
+  }
+}
