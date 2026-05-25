@@ -243,6 +243,8 @@ button:disabled {
   font-size: 20px;
 }
 
+
+
 /* PCで横に広くなりすぎない */
 @media (min-width: 1000px) {
   
