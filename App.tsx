@@ -72,10 +72,28 @@ type DiagnosisResult = {
   recommendedDepartment: string;
 };
 
+
+const mockHistory =[
+  {
+staffId:"ME001",
+ name:"テスト太郎",
+ job:"ME",
+ type:"論理分析型",
+ department:"急性期より",
+  },
+  {
+    staffId:"NS014",
+ name:"サンプル花子",
+ job:"看護師",
+ type:"協力支援型",
+ department:"慢性期より",
+    },
+];
+
 const questions: Question[]= [
   {
     id: 1,
-    text: "暴走するトロッコがこのまま進むと5人が犠牲になる。進路を変えると1人だけが犠牲になる。あなたはどうする？",
+    text: "暴走するトロッコがこのまま進むと5人が犠牲になりますが、進路を変えると1人だけが犠牲になります。あなたは進路を変えますか？",
     source: "トロッコ問題",
     options: [
       { text: "A. 5人を救うために進路を変える", scores: { logic: 2, challenge: 1 } },
@@ -85,7 +103,7 @@ const questions: Question[]= [
   },
   {
     id: 2,
-    text: "長年使われてきた装置の部品をすべて新しいものに交換した場合、それは元と同じものだと思う？",
+    text: "長年使われてきた装置の部品をすべて新しいものに交換した場合、それは元と同じものだと思いますか？",
     source: "テセウスの船",
     options: [
       { text: "A. 同じもの。役割や機能が続いているから", scores: { logic: 2, stable: 1 } },
@@ -95,7 +113,7 @@ const questions: Question[]= [
   },
   {
     id: 3,
-    text: "相手が知らない情報を自分だけ知っているとき、相手の立場に立って行動を予測するのは得意？",
+    text: "相手が知らない情報を自分だけ知っているとき、相手の立場に立って行動を予測するのは得意ですか？",
     source: "アンとサリー問題 / 誤信念課題",
     options: [
       { text: "A. 得意。相手目線で考えやすい", scores: { empathy: 2, coop: 1 } },
@@ -105,7 +123,7 @@ const questions: Question[]= [
   },
   {
     id: 4,
-    text: "相手を信じて協力すれば両方に利益があるが、裏切れば自分だけ得をするかもしれない。あなたは？",
+    text: "相手を信じて協力すれば両方に利益がありますが、裏切れば自分だけ得をするかもしれません。あなたはどうしますか？",
     source: "囚人のジレンマ",
     options: [
       { text: "A. まずは協力を選ぶ", scores: { coop: 2, empathy: 1 } },
@@ -115,7 +133,7 @@ const questions: Question[]= [
   },
   {
     id: 5,
-    text: "限られた資源を複数人に配るなら、何を基準にする？",
+    text: "限られた資源を複数人に配るなら、何を基準にしますか？",
     source: "ライフボート問題 / 資源配分問題",
     options: [
       { text: "A. 効果が最大になる配分", scores: { logic: 2, lead: 1 } },
@@ -125,7 +143,7 @@ const questions: Question[]= [
   },
   {
     id: 6,
-    text: "誰にも知られず、ほぼ不利益も出ない小さなルール違反ができるとしても、あなたは？",
+    text: "誰にも知られず、ほぼ不利益も出ない小さなルール違反ができるとしても、あなたは実行しますか？",
     source: "透明人間の指輪",
     options: [
       { text: "A. しない。見られていなくても同じ", scores: { honesty: 2, stable: 1 } },
@@ -135,7 +153,7 @@ const questions: Question[]= [
   },
   {
     id: 7,
-    text: "今すぐ小さな利益を得るか、少し待って大きな利益を得るか選べるとき、あなたは？",
+    text: "今すぐ小さな利益を得るか、少し待って大きな利益を得るか選べるとき、どちらを選びますか？",
     source: "マシュマロ実験",
     options: [
       { text: "A. 待って大きな利益を取る", scores: { careful: 2, stable: 1 } },
@@ -145,7 +163,7 @@ const questions: Question[]= [
   },
   {
     id: 8,
-    text: "高い精度で判断するAIがあっても、重要な判断の最終責任は誰が持つべきだと思う？",
+    text: "高い精度で判断するAIがあっても、重要な判断の最終責任は誰が持つべきだと思いますか？",
     source: "AI倫理問題",
     options: [
       { text: "A. AIを活用しつつ、人が最終判断する", scores: { logic: 2, careful: 1 } },
@@ -155,7 +173,7 @@ const questions: Question[]= [
   },
   {
     id: 9,
-    text: "チームが混乱していて誰も動けないとき、あなたはどうする？",
+    text: "チームが混乱していて誰も動けないとき、あなたは何をしますか？",
     source: "リーダーシップの仮想課題",
     options: [
       { text: "A. 自分が前に出て方向を示す", scores: { lead: 2, challenge: 1 } },
@@ -165,7 +183,7 @@ const questions: Question[]= [
   },
   {
     id: 10,
-    text: "全員が賛成しているが、自分だけ違和感がある案に出会ったらどうする？",
+    text: "全員が賛成していても、自分だけ違和感を感じる案がでたらどうしますか？",
     source: "集団同調 / 少数派の異議申し立て",
     options: [
       { text: "A. はっきり異議を出す", scores: { honesty: 2, lead: 1 } },
@@ -184,12 +202,16 @@ function App() {
   const searchParams = new URLSearchParams(window.location.search);
   const initialMode: "intro" | "profile" = searchParams.get("start") === "1" ? "profile" : "intro";
 
-  const [mode, setMode] = useState<"intro" | "profile" | "question" | "result">(initialMode);
+  const [mode, setMode] = useState<"intro" | "profile" | "question" | "result" | "mock">("mock");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [name, setName] = useState("");
+  const [staffId, setStaffId] = useState("");
   const [job, setJob] = useState("");
   const [answers, setAnswers] = useState<Record<number,string>>(initialAnswers);
   const [result, setResult] = useState<DiagnosisResult | null>(null);
+
+  const [mockPage, setMockPage] =
+  useState<"mockTop" | "mockResult">("mockTop");
 
   const resultRef = useRef<HTMLDivElement | null>(null);
 
@@ -209,8 +231,8 @@ function App() {
   };
 
   const startDiagnosis = () => {
-    if (name.trim() === "" || job.trim() === "") {
-      alert("名前と職業を入力してください。");
+    if (name.trim() === "" || job.trim() === "" || staffId.trim() === "") {
+      alert("職業ID名前と職業を入力してください。");
       return;
     }
 
@@ -524,8 +546,73 @@ function App() {
           </div>
         </div>
       </div>
+      
     );
   }
+  
+if (mode === "mock") {
+  if (mockPage === "mockTop") {
+    return (
+      <div className="app">
+        <div className="phoneFrame">
+          <h1>基本情報入力</h1>
+
+          <div className="profileBox">
+            <label>
+              名前
+              <input type="text" value="テスト太郎" readOnly />
+            </label>
+
+            <label>
+              職員ID
+              <input type="text" value="ME001" readOnly />
+            </label>
+
+            <label>
+              職業
+              <input type="text" value="臨床工学技士" readOnly />
+            </label>
+          </div>
+
+          <div className="buttonArea">
+            <button onClick={() => setMockPage("mockResult")}>
+              診断
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="app">
+      <div className="resultBox">
+        <h1>診断結果</h1>
+
+        <div className="resultTextBox">
+          <p>職員ID</p>
+          <span>ME001</span>
+
+          <p>あなたの主なタイプ</p>
+          <strong>論理分析型</strong>
+
+          <p>次に強い傾向</p>
+          <strong>慎重安定型</strong>
+
+          <p>思考傾向</p>
+          <span>分析重視。事実や根拠をもとに判断しやすいタイプです。</span>
+
+          <p>推奨配置</p>
+          <span>急性期寄り</span>
+        </div>
+
+        <div className="resultButtons">
+          <button onClick={() => setMockPage("mockTop")}>戻る</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
   if (mode === "intro") {
     return (
@@ -546,7 +633,7 @@ function App() {
         </div>
       </div>
     );
-  }
+  };
 
   if (mode === "profile") {
     return (
@@ -561,6 +648,15 @@ function App() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+
+            <label>
+              職員ID
+              <input
+              type="text"
+              value={staffId}
+              onChange={(e) => setStaffId(e.target.value)}
               />
             </label>
 
