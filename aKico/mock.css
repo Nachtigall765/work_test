@@ -1,0 +1,152 @@
+body {
+  margin: 0;
+  font-family: "Yu Gothic", "Meiryo", sans-serif;
+  background: linear-gradient(135deg, #eef8ff, #ffffff);
+  color: #12345a;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  padding: 24px;
+}
+
+.screen.active {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 90%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 32px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(70, 130, 180, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  right: -100px;
+  bottom: -120px;
+  background: rgba(69, 164, 255, 0.13);
+  border-radius: 50%;
+}
+
+.top-card::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: -100px;
+  top: -110px;
+  background: rgba(69, 164, 255, 0.1);
+  border-radius: 50%;
+}
+
+.icon {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #e4f4ff;
+  color: #2388e8;
+  font-size: 48px;
+  line-height: 82px;
+  font-weight: bold;
+}
+
+.plus {
+  position: absolute;
+  top: 32px;
+  left: 38px;
+  color: #b6ddff;
+  font-size: 42px;
+}
+
+h1 {
+  font-size: 30px;
+  margin: 12px 0;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+p {
+  color: #5c708a;
+  line-height: 1.8;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  text-align: left;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #cfe0ef;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #4aa3ff, #0b73d9);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(40, 120, 220, 0.25);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.sub-button {
+  background: white;
+  color: #0b73d9;
+  border: 1px solid #b9dcff;
+  box-shadow: none;
+}
+
+.step,
+.label {
+  color: #2d91e8;
+  font-weight: bold;
+}
+
+.result-card h1 {
+  color: #12345a;
+}
+
+.result-box {
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #f1f8ff;
+  text-align: left;
+}

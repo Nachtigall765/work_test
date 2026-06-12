@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aKico Mock</title>
+  <link rel="stylesheet" href="mock.css" />
+</head>
+<body>
+  <main class="app">
+
+    <!-- TOP -->
+    <section id="top" class="screen active">
+      <div class="card top-card">
+        <div class="plus">＋</div>
+        <div class="icon">✚</div>
+        <h1>人材適性分析システム</h1>
+        <p>思考傾向と価値観から、<br>活躍しやすい職場環境を分析します。</p>
+        <button onclick="showScreen('profile')">診断を開始する</button>
+        <button class="sub-button">管理者ページ</button>
+      </div>
+    </section>
+
+    <!-- 基本情報 -->
+    <section id="profile" class="screen">
+      <div class="card">
+        <h2>基本情報入力</h2>
+        <label>職員ID</label>
+        <input id="staffId" type="text" placeholder="例：EMP001">
+
+        <label>名前</label>
+        <input id="name" type="text" placeholder="例：テストユーザー">
+
+        <label>職業</label>
+        <input id="job" type="text" placeholder="例：臨床工学技士">
+
+        <button onclick="showScreen('question1')">次へ</button>
+      </div>
+    </section>
+
+    <!-- 質問1 -->
+    <section id="question1" class="screen">
+      <div class="card">
+        <p class="step">質問 1 / 3</p>
+        <h2>急なトラブルが起きた時、あなたは？</h2>
+        <button onclick="answer('logic')">原因を整理して対応する</button>
+        <button onclick="answer('empathy')">周囲に声をかけて連携する</button>
+        <button onclick="answer('careful')">安全確認を優先する</button>
+      </div>
+    </section>
+
+    <!-- 質問2 -->
+    <section id="question2" class="screen">
+      <div class="card">
+        <p class="step">質問 2 / 3</p>
+        <h2>新しい業務を任された時、あなたは？</h2>
+        <button onclick="answer('challenge')">まず挑戦してみる</button>
+        <button onclick="answer('careful')">手順を確認してから進める</button>
+        <button onclick="answer('independent')">自分で調べながら進める</button>
+      </div>
+    </section>
+
+    <!-- 質問3 -->
+    <section id="question3" class="screen">
+      <div class="card">
+        <p class="step">質問 3 / 3</p>
+        <h2>チームで意見が分かれた時、あなたは？</h2>
+        <button onclick="answer('coop')">全員の意見をまとめる</button>
+        <button onclick="answer('lead')">方向性を示す</button>
+        <button onclick="answer('honesty')">正直に自分の意見を伝える</button>
+      </div>
+    </section>
+
+    <!-- 結果 -->
+    <section id="result" class="screen">
+      <div class="card result-card">
+        <h2>診断結果</h2>
+        <p class="label">あなたの傾向</p>
+        <h1 id="resultType">論理分析型</h1>
+        <p id="resultComment">
+          事実や根拠を重視し、冷静に判断する傾向があります。
+        </p>
+
+        <div class="result-box">
+          <p><strong>推奨配置：</strong>急性期寄り</p>
+          <p><strong>特徴：</strong>分析力・判断力</p>
+        </div>
+
+        <button onclick="resetMock()">TOPへ戻る</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentQuestion = 1;
+    let scores = {
+      logic: 0,
+      empathy: 0,
+      challenge: 0,
+      careful: 0,
+      coop: 0,
+      lead: 0,
+      independent: 0,
+      honesty: 0
+    };
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+      });
+      document.getElementById(id).classList.add("active");
+    }
+
+    function answer(type) {
+      scores[type]++;
+
+      if (currentQuestion === 1) {
+        currentQuestion++;
+        showScreen("question2");
+      } else if (currentQuestion === 2) {
+        currentQuestion++;
+        showScreen("question3");
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const maxType = Object.keys(scores).reduce((a, b) =>
+        scores[a] > scores[b] ? a : b
+      );
+
+      const resultMap = {
+        logic: ["論理分析型", "事実や根拠を重視し、冷静に判断する傾向があります。"],
+        empathy: ["共感協調型", "相手の気持ちを汲み取り、周囲と協力することが得意です。"],
+        challenge: ["挑戦主導型", "新しいことに前向きで、行動力があります。"],
+        careful: ["慎重安定型", "リスクを見極め、堅実に進めることが得意です。"],
+        coop: ["協調支援型", "チームワークを重視し、周囲を支える力があります。"],
+        lead: ["主導推進型", "方向性を示し、物事を前に進める力があります。"],
+        independent: ["自立実行型", "自分で考えて行動し、主体的に進めることが得意です。"],
+        honesty: ["誠実安定型", "誠実さを大切にし、信頼関係を築くことが得意です。"]
+      };
+
+      document.getElementById("resultType").textContent = resultMap[maxType][0];
+      document.getElementById("resultComment").textContent = resultMap[maxType][1];
+
+      showScreen("result");
+    }
+
+    function resetMock() {
+      currentQuestion = 1;
+      scores = {
+        logic: 0,
+        empathy: 0,
+        challenge: 0,
+        careful: 0,
+        coop: 0,
+        lead: 0,
+        independent: 0,
+        honesty: 0
+      };
+      showScreen("top");
+    }
+  </script>
+</body>
+</html>
